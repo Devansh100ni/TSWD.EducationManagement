@@ -1,0 +1,6 @@
+@TSWD.EducationManagement_HostAddress = http://localhost:5193
+
+GET {{TSWD.EducationManagement_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

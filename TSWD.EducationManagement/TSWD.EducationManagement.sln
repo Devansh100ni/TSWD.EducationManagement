@@ -1,0 +1,55 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36414.22 d17.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TSWD.EducationManagement", "TSWD.EducationManagement\TSWD.EducationManagement.csproj", "{B5D7804A-6BD8-4B14-BEFB-4FE5AA6A859D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TSWD.EducationManagement.EntityFrameworkCore", "TSWD.EducationManagement.EntityFrameworkCore\TSWD.EducationManagement.EntityFrameworkCore.csproj", "{381F2A49-D956-44EE-A04F-C1C7FF9EF9F6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TSWD.EducationManagement.Domain", "TSWD.EducationManagement.Domain\TSWD.EducationManagement.Domain.csproj", "{3F6FD582-6E4E-4A7E-B660-A0B9B46A506F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TSWD.EducationManagement.Application", "TSWD.EducationManagement.Application\TSWD.EducationManagement.Application.csproj", "{9386A616-66AC-44CB-9515-DF79334D856A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TSWD.EducationManagement.Shared", "TSWD.EducationManagement.Shared\TSWD.EducationManagement.Shared.csproj", "{EFD7E81F-3C4B-4909-BD83-56ECCB9A9A87}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TSWD.EducationManagement.Dapper", "TSWD.EducationManagement.Dapper\TSWD.EducationManagement.Dapper.csproj", "{9BD1D2D3-9001-4FC6-9D71-DDC24BFC8504}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B5D7804A-6BD8-4B14-BEFB-4FE5AA6A859D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B5D7804A-6BD8-4B14-BEFB-4FE5AA6A859D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B5D7804A-6BD8-4B14-BEFB-4FE5AA6A859D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B5D7804A-6BD8-4B14-BEFB-4FE5AA6A859D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{381F2A49-D956-44EE-A04F-C1C7FF9EF9F6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{381F2A49-D956-44EE-A04F-C1C7FF9EF9F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{381F2A49-D956-44EE-A04F-C1C7FF9EF9F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{381F2A49-D956-44EE-A04F-C1C7FF9EF9F6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3F6FD582-6E4E-4A7E-B660-A0B9B46A506F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3F6FD582-6E4E-4A7E-B660-A0B9B46A506F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3F6FD582-6E4E-4A7E-B660-A0B9B46A506F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3F6FD582-6E4E-4A7E-B660-A0B9B46A506F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9386A616-66AC-44CB-9515-DF79334D856A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9386A616-66AC-44CB-9515-DF79334D856A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9386A616-66AC-44CB-9515-DF79334D856A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9386A616-66AC-44CB-9515-DF79334D856A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EFD7E81F-3C4B-4909-BD83-56ECCB9A9A87}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EFD7E81F-3C4B-4909-BD83-56ECCB9A9A87}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EFD7E81F-3C4B-4909-BD83-56ECCB9A9A87}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EFD7E81F-3C4B-4909-BD83-56ECCB9A9A87}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9BD1D2D3-9001-4FC6-9D71-DDC24BFC8504}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9BD1D2D3-9001-4FC6-9D71-DDC24BFC8504}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9BD1D2D3-9001-4FC6-9D71-DDC24BFC8504}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9BD1D2D3-9001-4FC6-9D71-DDC24BFC8504}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {049E3144-9BD4-459E-ACD9-FD5481D915B3}
+	EndGlobalSection
+EndGlobal

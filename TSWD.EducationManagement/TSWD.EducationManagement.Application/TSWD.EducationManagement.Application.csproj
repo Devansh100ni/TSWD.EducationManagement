@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="15.0.1" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\TSWD.EducationManagement.Domain\TSWD.EducationManagement.Domain.csproj" />
+    <ProjectReference Include="..\TSWD.EducationManagement.EntityFrameworkCore\TSWD.EducationManagement.EntityFrameworkCore.csproj" />
+    <ProjectReference Include="..\TSWD.EducationManagement.Shared\TSWD.EducationManagement.Shared.csproj" />
+    <ProjectReference Include="..\TSWD.EducationManagement.Dapper\TSWD.EducationManagement.Dapper.csproj" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+</Project>

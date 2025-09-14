@@ -1,0 +1,39 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <None Remove="Migration\01\V1_0_1__ConfigurationTables.sql" />
+    <None Remove="Migration\01\V1_0_2__SeedInitialData.sql" />
+    <None Remove="Migration\01\V1_0_3__AddNewColumnsToRoleTable.sql" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Migration\01\V1_0_1__ConfigurationTables.sql" />
+    <EmbeddedResource Include="Migration\01\V1_0_2__SeedInitialData.sql" />
+    <EmbeddedResource Include="Migration\01\V1_0_3__AddNewColumnsToRoleTable.sql" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.9" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.9">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.9" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="9.0.9">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\TSWD.EducationManagement.Domain\TSWD.EducationManagement.Domain.csproj" />
+    <ProjectReference Include="..\TSWD.EducationManagement.Shared\TSWD.EducationManagement.Shared.csproj" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+</Project>
