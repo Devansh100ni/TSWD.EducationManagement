@@ -1,6 +1,4 @@
-﻿using Azure.Core;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using TSWD.EducationManagement.Application.Tenents;
 using TSWD.EducationManagement.Domain.DTOs.Tanent;
 using TSWD.EducationManagement.Shared.Helpers;
@@ -23,9 +21,9 @@ namespace TSWD.EducationManagement.Controllers
         {
             return Ok(await tenantService.ListOfTenants(request.PageNumber, request.PageSize));
         }
-        
+
         [HttpPost("CreateOrUpdate")]
-        public async Task<IActionResult> PostAsync([FromForm]CreateUpdateTenantDto dto)
+        public async Task<IActionResult> PostAsync([FromForm] CreateUpdateTenantDto dto)
         {
             return Ok(await tenantService.CreateUpdateTenant(dto));
         }

@@ -3,7 +3,7 @@ using TSWD.EducationManagement.Shared.Helpers;
 
 namespace TSWD.EducationManagement.Application.Tenents
 {
-    public interface ITenantService 
+    public interface ITenantService
     {
         Task<PagedResult<TenantDto>> ListOfTenants(int pageNumber, int pageSize);
 

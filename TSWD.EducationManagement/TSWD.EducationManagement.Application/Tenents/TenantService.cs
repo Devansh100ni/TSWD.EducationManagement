@@ -1,11 +1,8 @@
-﻿using AutoMapper;
-using Microsoft.EntityFrameworkCore;
-using TSWD.EducationManagement.Dapper.Tanent;
+﻿using TSWD.EducationManagement.Dapper.Tanent;
 using TSWD.EducationManagement.Domain.DTOs.Tanent;
 using TSWD.EducationManagement.Domain.Entities;
 using TSWD.EducationManagement.EntityFrameworkCore.Infrastructure;
 using TSWD.EducationManagement.Shared.Helpers;
-using static Dapper.SqlMapper;
 
 namespace TSWD.EducationManagement.Application.Tenents
 {

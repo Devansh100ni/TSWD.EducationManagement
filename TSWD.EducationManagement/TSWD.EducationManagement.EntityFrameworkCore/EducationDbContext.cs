@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
-using System.Reflection.Emit;
 using TSWD.EducationManagement.Domain.Entities;
 using TSWD.EducationManagement.Domain.Extentions;
 

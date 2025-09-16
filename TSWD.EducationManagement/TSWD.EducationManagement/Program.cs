@@ -7,11 +7,6 @@ using Microsoft.OpenApi.Models;
 using System.Reflection;
 using System.Text;
 using TSWD.EducationManagement;
-using TSWD.EducationManagement.Application;
-using TSWD.EducationManagement.Application.Authentication;
-using TSWD.EducationManagement.Application.Tenents;
-using TSWD.EducationManagement.Dapper.Infrastructure;
-using TSWD.EducationManagement.Dapper.Tanent;
 using TSWD.EducationManagement.EntityFrameworkCore;
 using TSWD.EducationManagement.EntityFrameworkCore.Infrastructure;
 
