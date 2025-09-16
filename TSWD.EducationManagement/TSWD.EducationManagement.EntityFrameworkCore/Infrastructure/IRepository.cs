@@ -9,5 +9,7 @@
         Task DeleteAsync(T entity);
 
         Task<int> SaveChangesAsync();
+
+        Task<IQueryable<T>> AsQueryable();
     }
 }

@@ -38,6 +38,8 @@ namespace TSWD.EducationManagement.EntityFrameworkCore.Infrastructure
 
         public async Task<int> SaveChangesAsync() => await _context.SaveChangesAsync();
 
+        public async Task<IQueryable<T>> AsQueryable() => _dbSet.AsQueryable();
+
     }
 
 }

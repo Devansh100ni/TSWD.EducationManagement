@@ -26,7 +26,7 @@ namespace TSWD.EducationManagement.Domain.Entities
         public bool LockoutEnabled { get; set; }
         public int AccessFailedCount { get; set; }
         public bool ShouldChangePasswordOnNextLogin { get; set; }
-        public int EntityVersion { get; set; }
+        public int? EntityVersion { get; set; }
         public DateTimeOffset? LastPasswordChangeTime { get; set; }
     }
 }
