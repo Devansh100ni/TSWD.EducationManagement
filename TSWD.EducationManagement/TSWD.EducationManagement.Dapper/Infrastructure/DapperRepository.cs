@@ -2,6 +2,7 @@
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 using System.Data;
+using System.Data.Common;
 
 namespace TSWD.EducationManagement.Dapper.Infrastructure
 {
@@ -34,5 +35,8 @@ namespace TSWD.EducationManagement.Dapper.Infrastructure
             using var conn = Connection;
             return await conn.ExecuteAsync(sql, param);
         }
+
+        public async Task<SqlMapper.GridReader> QueryMultipleAsync(string sql, object? param = null)
+        => await Connection.QueryMultipleAsync(sql, param);
     }
 }

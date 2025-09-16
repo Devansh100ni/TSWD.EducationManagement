@@ -4,9 +4,14 @@ using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using System.Reflection;
 using System.Text;
+using TSWD.EducationManagement;
+using TSWD.EducationManagement.Application;
 using TSWD.EducationManagement.Application.Authentication;
+using TSWD.EducationManagement.Application.Tenents;
 using TSWD.EducationManagement.Dapper.Infrastructure;
+using TSWD.EducationManagement.Dapper.Tanent;
 using TSWD.EducationManagement.EntityFrameworkCore;
 using TSWD.EducationManagement.EntityFrameworkCore.Infrastructure;
 
@@ -20,12 +25,27 @@ builder.Services.AddOpenApi();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+
 builder.Services.AddDbContext<EducationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
+builder.Services.AddHttpContextAccessor();
+
+var assemblies = new List<Assembly>
+{
+    Assembly.Load("TSWD.EducationManagement.Application"),
+    Assembly.Load("TSWD.EducationManagement.Dapper"),
+    Assembly.Load("TSWD.EducationManagement.EntityFrameworkCore"),
+    // Add more projects as needed
+};
+
+foreach (var assembly in assemblies)
+{
+    builder.Services.AddAllServicesFromAssembly(assembly);
+}
+
+// Generic repositories
 builder.Services.AddTransient(typeof(IRepository<>), typeof(Repository<>));
-builder.Services.AddTransient<IDapperRepository, DapperRepository>();
-builder.Services.AddTransient<IAuthService, AuthService>();
 
 
 builder.Services.AddSwaggerGen(options =>

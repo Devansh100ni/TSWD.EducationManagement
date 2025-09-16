@@ -10,9 +10,11 @@
     <EmbeddedResource Include="Migration\01\V1_0_1__ConfigurationTables.sql" />
     <EmbeddedResource Include="Migration\01\V1_0_2__SeedInitialData.sql" />
     <EmbeddedResource Include="Migration\01\V1_0_3__AddNewColumnsToRoleTable.sql" />
+    <EmbeddedResource Include="Migration\01\V1_0_4__AlterTenantTableColumn.sql" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.3.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.9" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.9">
       <PrivateAssets>all</PrivateAssets>
