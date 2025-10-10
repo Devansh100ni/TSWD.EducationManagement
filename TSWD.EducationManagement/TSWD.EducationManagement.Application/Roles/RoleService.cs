@@ -1,4 +1,5 @@
-﻿using TSWD.EducationManagement.Domain.DTOs.Role;
+﻿using System.Data;
+using TSWD.EducationManagement.Domain.DTOs.Role;
 using TSWD.EducationManagement.Domain.Entities;
 using TSWD.EducationManagement.EntityFrameworkCore.Infrastructure;
 using TSWD.EducationManagement.Shared.Helpers;
@@ -8,10 +9,16 @@ namespace TSWD.EducationManagement.Application.Roles
     public class RoleService : IRoleService
     {
         private readonly IRepository<AppRole> repository;
+        private readonly IRepository<AppRolePermission> rolePermissionRepo;
+        private readonly IRepository<AppPermission> permissionRepo;
 
-        public RoleService(IRepository<AppRole> repository)
+        public RoleService(IRepository<AppRole> repository,
+                           IRepository<AppRolePermission> rolePermissionRepo,
+                           IRepository<AppPermission> permissionRepo)
         {
             this.repository = repository;
+            this.rolePermissionRepo = rolePermissionRepo;
+            this.permissionRepo = permissionRepo;
         }
 
         public async Task CreateUpdate(CreateUpdateRoleDto input)
@@ -32,7 +39,7 @@ namespace TSWD.EducationManagement.Application.Roles
                 {
                     Name = input.Name,
                     TenantId = input.TenantId
-                };  
+                };
 
                 await repository.AddAsync(appRole);
             }
@@ -40,31 +47,78 @@ namespace TSWD.EducationManagement.Application.Roles
 
         public async Task<PagedResult<RoleDto>> Get(PagedRequest input, Guid? tenantId = null)
         {
-            var query = await repository.GetAllAsync();
+            var rolesQuery = await repository.GetAllAsync();
+            var rolePermissions = await rolePermissionRepo.GetAllAsync();
+            var allPermissions = await permissionRepo.GetAllAsync();
 
             if (tenantId.HasValue)
-                query = query.Where(r => r.TenantId == tenantId.Value);
+                rolesQuery = rolesQuery.Where(r => r.TenantId == tenantId.Value);
 
+            var totalCount = rolesQuery.Count();
             int skip = (input.PageNumber - 1) * input.PageSize;
 
-            var totalCount = query.ToList().Count;
+            var pagedRoles = rolesQuery
+                .Skip(skip)
+                .Take(input.PageSize)
+                .ToList();
 
-            var roles = query.Select(e => new RoleDto
+            var roles = pagedRoles.Select(role =>
             {
-                Id = e.Id,
-                Name = e.Name,
-            }).Skip(skip).Take(input.PageSize).ToList();
+                var permissionIds = rolePermissions
+                    .Where(rp => rp.RoleId == role.Id)
+                    .Select(rp => rp.PermissionId)
+                    .ToList();
 
+                var permissionNames = allPermissions
+                    .Where(p => permissionIds.Contains(p.Id))
+                    .Select(p => p.Name)
+                    .ToList();
+
+                return new RoleDto
+                {
+                    Id = role.Id,
+                    Name = role.Name,
+                    Permissions = string.Join(", ", permissionNames) ?? "-"
+                };
+            }).ToList();
+
+            // If no roles found on this page, go back one page
             if (!roles.Any() && input.PageNumber > 1)
             {
                 input.PageNumber--;
-
-                skip = (input.PageNumber - 1) * input.PageSize;
-
-                await Get(input);
+                return await Get(input, tenantId);
             }
 
             return new PagedResult<RoleDto>(roles.ToList(), totalCount);
+        }
+
+        public async Task<List<PermissionGroupDto>> GetPermissionGroups()
+        {
+            var permissionGroups = new List<PermissionGroupDto>();
+
+            // Fetch data
+            var role = await repository.GetAllAsync();
+            var rolePermissions = await rolePermissionRepo.GetAllAsync();
+            var allPermissions = await permissionRepo.GetAllAsync();
+
+            if (role == null)
+                throw new Exception("Role not found.");
+            
+            // Group all permissions by their prefix (e.g., "Users" from "Users.Create")
+            permissionGroups = allPermissions
+                .GroupBy(p => p.Name.Split('.')[0]) // "Users" or "Students"
+                .Select(g => new PermissionGroupDto
+                {
+                    GroupName = g.Key,
+                    Permissions = g.Select(p => new PermissionItemDto
+                    {
+                        Name = p.Name,
+                        Display = p.DisplayName
+                    }).ToList()
+                })
+                .ToList();
+
+            return permissionGroups;
         }
     }
 }

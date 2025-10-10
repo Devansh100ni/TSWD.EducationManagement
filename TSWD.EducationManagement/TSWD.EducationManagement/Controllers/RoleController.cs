@@ -7,7 +7,6 @@ namespace TSWD.EducationManagement.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
     public class RoleController : ControllerBase
     {
         private readonly IRoleService roleService;
@@ -23,6 +22,13 @@ namespace TSWD.EducationManagement.Controllers
             var result = await roleService.Get(input, tenantId);
             return Ok(result);
         }
-               
+
+        [HttpGet("[action]")]
+        public async Task<IActionResult> GetPermissions()
+        {
+            var result = await roleService.GetPermissionGroups();
+            return Ok(result);
+        }
+
     }
 }

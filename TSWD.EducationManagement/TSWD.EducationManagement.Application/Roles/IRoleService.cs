@@ -12,6 +12,8 @@ namespace TSWD.EducationManagement.Application.Roles
     {
         Task<PagedResult<RoleDto>> Get(PagedRequest input, Guid? tenantId = null);
 
+        Task<List<PermissionGroupDto>> GetPermissionGroups();
+
         Task CreateUpdate(CreateUpdateRoleDto input);
     }
 }
