@@ -8,6 +8,7 @@ namespace TSWD.EducationManagement.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Permission(PermissionConstent.Users.Create)]
     public class UsersController : ControllerBase
     {
         private readonly IUserService userService;
@@ -24,6 +25,7 @@ namespace TSWD.EducationManagement.Controllers
         }
 
         [HttpPost("[action]")]
+        [Permission(PermissionConstent.Users.Create)]
         public async Task<IActionResult> CreateUpdateUserAsync(CreateUpdateUsersDto input)
         {
             var result = await userService.CreateUpdateUserAsync(input);

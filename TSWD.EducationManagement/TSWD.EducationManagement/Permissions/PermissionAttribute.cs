@@ -19,7 +19,7 @@ namespace TSWD.EducationManagement.Permissions
             var userId = context.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
             if (userId == null)
             {
-                context.Result = new ForbidResult();
+                context.Result = new UnauthorizedResult();
                 return;
             }
 
@@ -28,7 +28,7 @@ namespace TSWD.EducationManagement.Permissions
 
             if (!hasPermission)
             {
-                context.Result = new ForbidResult();
+                context.Result = new UnauthorizedResult();
             }
         }
     }

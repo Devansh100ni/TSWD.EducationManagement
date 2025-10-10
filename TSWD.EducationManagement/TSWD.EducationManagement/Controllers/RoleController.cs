@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TSWD.EducationManagement.Application.Roles;
+using TSWD.EducationManagement.Domain.DTOs.Role;
 using TSWD.EducationManagement.Shared.Helpers;
 
 namespace TSWD.EducationManagement.Controllers
@@ -28,6 +29,13 @@ namespace TSWD.EducationManagement.Controllers
         {
             var result = await roleService.GetPermissionGroups();
             return Ok(result);
+        }
+
+        [HttpPost("[action]")]
+        public async Task<IActionResult> CreateUpdate([FromBody] CreateUpdateRoleDto input)
+        {
+            await roleService.CreateUpdate(input);
+            return Ok();
         }
 
     }

@@ -11,6 +11,7 @@ using TSWD.EducationManagement;
 using TSWD.EducationManagement.EntityFrameworkCore;
 using TSWD.EducationManagement.EntityFrameworkCore.Infrastructure;
 using TSWD.EducationManagement.Permissions;
+using TSWD.EducationManagement.Shared.Providers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -55,9 +56,11 @@ foreach (var assembly in assemblies)
     builder.Services.AddAllServicesFromAssembly(assembly);
 }
 
+
 // Generic repositories
 builder.Services.AddTransient(typeof(IRepository<>), typeof(Repository<>));
-
+builder.Services.AddTransient<ITenantProvider, TenantProvider>();
+builder.Services.AddScoped<IPermissionChecker, PermissionChecker>();
 
 builder.Services.AddSwaggerGen(options =>
 {

@@ -18,10 +18,11 @@ namespace TSWD.EducationManagement.EntityFrameworkCore.Infrastructure
 
         public async Task<IEnumerable<T>> GetAllAsync() => await _dbSet.ToListAsync();
 
-        public async Task AddAsync(T entity)
+        public async Task<T> AddAsync(T entity)
         {
-            await _dbSet.AddAsync(entity);
+            var addedEntry = await _dbSet.AddAsync(entity);
             await _context.SaveChangesAsync();
+            return addedEntry.Entity;
         }
 
         public async Task UpdateAsync(T entity)

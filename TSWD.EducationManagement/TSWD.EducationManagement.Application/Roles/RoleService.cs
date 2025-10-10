@@ -23,25 +23,53 @@ namespace TSWD.EducationManagement.Application.Roles
 
         public async Task CreateUpdate(CreateUpdateRoleDto input)
         {
+            AppRole role;
+
             if (input.Id.HasValue)
             {
-                var role = await repository.GetByIdAsync(input.Id.Value);
+                // Update existing role
+                role = await repository.GetByIdAsync(input.Id.Value);
 
                 if (role != null)
                 {
                     role.Name = input.Name;
                     await repository.UpdateAsync(role);
+
+                    // Remove old permissions
+                    var oldPermissions = (await rolePermissionRepo.GetAllAsync()).Where(p => p.RoleId == role.Id).ToList();
+                    foreach (var perm in oldPermissions)
+                    {
+                        await rolePermissionRepo.DeleteAsync(perm);
+                    }
                 }
             }
             else
             {
-                AppRole appRole = new AppRole
+                // Create new role
+                role = new AppRole
                 {
                     Name = input.Name,
-                    TenantId = input.TenantId
+                    TenantId = input.TenantId,
+                    ConcurrencyStamp = Guid.NewGuid().ToString()
                 };
 
-                await repository.AddAsync(appRole);
+                role = await repository.AddAsync(role);
+            }
+
+            // Add new permissions
+            if (input.Permissions != null)
+            {
+                foreach (var permId in input.Permissions)
+                {
+                    await rolePermissionRepo.AddAsync(new AppRolePermission
+                    {
+                        RoleId = role.Id,
+                        PermissionId = permId.PermissionId,
+                        TenantId = permId.TenantId,
+                        ConcurrencyStamp = Guid.NewGuid().ToString(),
+                        ExtraProperties = "{}"
+                    });
+                }
             }
         }
 
@@ -71,7 +99,7 @@ namespace TSWD.EducationManagement.Application.Roles
 
                 var permissionNames = allPermissions
                     .Where(p => permissionIds.Contains(p.Id))
-                    .Select(p => p.Name)
+                    .Select(p => p.DisplayName)
                     .ToList();
 
                 return new RoleDto
@@ -112,6 +140,7 @@ namespace TSWD.EducationManagement.Application.Roles
                     GroupName = g.Key,
                     Permissions = g.Select(p => new PermissionItemDto
                     {
+                        Id = p.Id,
                         Name = p.Name,
                         Display = p.DisplayName
                     }).ToList()
