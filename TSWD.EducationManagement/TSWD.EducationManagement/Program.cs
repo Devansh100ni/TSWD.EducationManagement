@@ -21,8 +21,22 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 
+
+if (OperatingSystem.IsWindows())
+{
+    builder.Logging.AddEventLog();
+}
+
+var environment = builder.Environment;
+string connectionString = environment.IsDevelopment()
+    ? builder.Configuration.GetConnectionString("LocalConnection")
+    : builder.Configuration.GetConnectionString("ProductionConnection");
+
+builder.Configuration["ConnectionStrings:DefaultConnection"] = connectionString;
+
+// Register DbContext (example)
 builder.Services.AddDbContext<EducationDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+    options.UseSqlServer(connectionString));
 
 builder.Services.AddHttpContextAccessor();
 
@@ -63,7 +77,7 @@ builder.Services.AddCors(options =>
     options.AddPolicy("AllowSpecificOrigin",
         builder =>
         {
-            builder.WithOrigins("http://localhost:4200")
+            builder.WithOrigins("http://educationmanagement-api.somee.com").WithOrigins("http://localhost:4200")
             .AllowAnyHeader()
             .AllowAnyMethod().AllowAnyOrigin();
         });
@@ -86,10 +100,10 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
 
 var app = builder.Build();
 
-ConfigureEvolve(builder.Configuration);
+ConfigureEvolve(builder.Configuration, app);
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+//if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI(options =>
@@ -112,11 +126,22 @@ app.MapControllers();
 app.Run();
 
 
-static void ConfigureEvolve(IConfiguration configuration)
+static void ConfigureEvolve(IConfiguration configuration, WebApplication app)
 {
     try
     {
-        using var cnx = new SqlConnection(configuration.GetConnectionString("DefaultConnection"));
+        string connectionString;
+
+        if (app.Environment.IsDevelopment())
+        {
+            connectionString = configuration.GetConnectionString("LocalConnection");
+        }
+        else
+        {
+            connectionString = configuration.GetConnectionString("ProductionConnection");
+        }
+
+        using var cnx = new SqlConnection(connectionString);
 
         var evolve = new Evolve(cnx, msg => Console.WriteLine(msg))
         {

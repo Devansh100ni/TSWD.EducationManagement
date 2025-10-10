@@ -8,7 +8,7 @@ IF EXISTS (
       AND c.is_nullable = 0
 )
 BEGIN
-    ALTER TABLE [EducationDb].[dbo].[AppTenants]
+    ALTER TABLE [AppTenants]
     ALTER COLUMN [EntityVersion] INT NULL;
 END
 
@@ -23,6 +23,6 @@ IF EXISTS (
       AND c.is_nullable = 0
 )
 BEGIN
-    ALTER TABLE [EducationDb].[dbo].[AppUsers]
+    ALTER TABLE [AppUsers]
     ALTER COLUMN [EntityVersion] INT NULL;
 END

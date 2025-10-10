@@ -6,5 +6,9 @@ namespace TSWD.EducationManagement.Application.Users
     public interface IUserService
     {
         Task<PagedResult<UsersDtos>> GetAllUsersAsync(PagedRequest input, Guid? tenantId = null);
+
+        Task<Result<UsersDtos>> CreateUpdateUserAsync(CreateUpdateUsersDto input);
+
+        Task<Result<CreateUpdateUsersDto>> GetUserByIdAsync(Guid id);
     }
 }

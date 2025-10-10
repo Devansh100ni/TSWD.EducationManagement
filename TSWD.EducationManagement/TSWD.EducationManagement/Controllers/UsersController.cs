@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TSWD.EducationManagement.Application.Users;
+using TSWD.EducationManagement.Domain.DTOs.Users;
 using TSWD.EducationManagement.Shared.Helpers;
 
 namespace TSWD.EducationManagement.Controllers
@@ -17,9 +18,22 @@ namespace TSWD.EducationManagement.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> GetUsersAsync(PagedRequest input, Guid tenantId)
+        public async Task<IActionResult> GetUsersAsync([FromQuery] Guid? tenantId, PagedRequest input)
         {
             return Ok(await userService.GetAllUsersAsync(input, tenantId));
         }
+
+        [HttpPost("[action]")]
+        public async Task<IActionResult> CreateUpdateUserAsync(CreateUpdateUsersDto input)
+        {
+            var result = await userService.CreateUpdateUserAsync(input);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+
+
     }
 }

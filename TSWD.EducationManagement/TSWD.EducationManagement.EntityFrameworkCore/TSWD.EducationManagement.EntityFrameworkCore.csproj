@@ -4,6 +4,7 @@
     <None Remove="Migration\01\V1_0_1__ConfigurationTables.sql" />
     <None Remove="Migration\01\V1_0_2__SeedInitialData.sql" />
     <None Remove="Migration\01\V1_0_3__AddNewColumnsToRoleTable.sql" />
+    <None Remove="Migration\01\V1_0_5__AddPermission.sql" />
   </ItemGroup>
 
   <ItemGroup>
@@ -11,6 +12,7 @@
     <EmbeddedResource Include="Migration\01\V1_0_2__SeedInitialData.sql" />
     <EmbeddedResource Include="Migration\01\V1_0_3__AddNewColumnsToRoleTable.sql" />
     <EmbeddedResource Include="Migration\01\V1_0_4__AlterTenantTableColumn.sql" />
+    <EmbeddedResource Include="Migration\01\V1_0_5__AddPermission.sql" />
   </ItemGroup>
 
   <ItemGroup>
