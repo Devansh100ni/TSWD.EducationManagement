@@ -5,9 +5,20 @@ IF NOT EXISTS (
     WHERE o.name = 'AppPermissions'
       AND o.type = 'U'
       AND c.name = 'DisplayName'
-      AND c.is_nullable = 0
 )
 BEGIN
     ALTER TABLE [AppPermissions]
     ADD [DisplayName] varchar(MAX) NULL;
+END
+
+
+IF EXISTS (
+    SELECT 1
+    FROM sys.columns
+    WHERE Name = N'TenantId'
+      AND Object_ID = OBJECT_ID(N'dbo.AppRolePermissions')
+)
+BEGIN
+    ALTER TABLE [dbo].[AppRolePermissions]
+    ALTER COLUMN [TenantId] UNIQUEIDENTIFIER NULL;
 END

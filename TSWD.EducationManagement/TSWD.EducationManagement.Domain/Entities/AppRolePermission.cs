@@ -12,7 +12,7 @@ namespace TSWD.EducationManagement.Domain.Entities
         public Guid Id { get; set; }
         public Guid RoleId { get; set; }
         public Guid PermissionId { get; set; }
-        public Guid TenantId { get; set; }
+        public Guid? TenantId { get; set; }
         public string ExtraProperties { get; set; } = null!;
         public string ConcurrencyStamp { get; set; } = null!;
         public DateTime CreationTime { get; set; }
