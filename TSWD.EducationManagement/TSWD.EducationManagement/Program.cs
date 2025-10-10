@@ -4,11 +4,13 @@ using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Swashbuckle.AspNetCore.Filters;
 using System.Reflection;
 using System.Text;
 using TSWD.EducationManagement;
 using TSWD.EducationManagement.EntityFrameworkCore;
 using TSWD.EducationManagement.EntityFrameworkCore.Infrastructure;
+using TSWD.EducationManagement.Permissions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -70,6 +72,14 @@ builder.Services.AddSwaggerGen(options =>
             Email = "you@example.com"
         }
     });
+    options.AddSecurityDefinition("oauth2", new Microsoft.OpenApi.Models.OpenApiSecurityScheme
+    {
+        Description = "Standard Authorization header using the Bearer Scheme(\"bearer {token}\"",
+        In = ParameterLocation.Header,
+        Name = "Authorization",
+        Type = SecuritySchemeType.ApiKey
+    });
+    options.OperationFilter<SecurityRequirementsOperationFilter>();
 });
 
 builder.Services.AddCors(options =>
@@ -101,6 +111,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
 var app = builder.Build();
 
 ConfigureEvolve(builder.Configuration, app);
+SeedPermissions(app);
 
 // Configure the HTTP request pipeline.
 //if (app.Environment.IsDevelopment())
@@ -159,5 +170,26 @@ static void ConfigureEvolve(IConfiguration configuration, WebApplication app)
     {
         Console.WriteLine("Database migration failed: " + ex.Message);
         throw;
+    }
+}
+
+static void SeedPermissions(WebApplication app)
+{
+    using (var scope = app.Services.CreateScope())
+    {
+        var context = scope.ServiceProvider.GetRequiredService<EducationDbContext>();
+        var definitionContext = new PermissionDefinitionContext();
+        var provider = new EducationPermissionDefinitionProvider();
+        provider.Define(definitionContext);
+
+        foreach (var permission in definitionContext.GetPermissions())
+        {
+            if (!context.AppPermissions.Any(p => p.Name == permission.Name))
+            {
+                context.AppPermissions.Add(permission);
+            }
+        }
+
+        context.SaveChanges();
     }
 }

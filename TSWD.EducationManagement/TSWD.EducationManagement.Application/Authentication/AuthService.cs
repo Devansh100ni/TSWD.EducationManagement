@@ -49,12 +49,12 @@ namespace TSWD.EducationManagement.Application.Authentication
 
             var role = await roleRepository.GetByIdAsync(user.RoleId.Value);
 
-            var token = GenerateToken(user.Email, user.UserName, role.Name, user.Id);
+            var token = GenerateToken(user.Email, user.UserName, role.Name, user.Id, Convert.ToString(user.TenantId));
 
             return Result<string>.Ok(token, "Login successful");
         }
 
-        private string GenerateToken(string email, string userName, string role, Guid userId)
+        private string GenerateToken(string email, string userName, string role, Guid userId, string? tenantId = null)
         {
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Jwt:Key"]));
             List<Claim> claims = new List<Claim>()
@@ -62,7 +62,8 @@ namespace TSWD.EducationManagement.Application.Authentication
                 new Claim(ClaimTypes.Email, email),
                 new Claim(ClaimTypes.Role, role),
                 new Claim(ClaimTypes.Name, userName),
-                new Claim(ClaimTypes.NameIdentifier, userId.ToString())
+                new Claim(ClaimTypes.NameIdentifier, userId.ToString()),
+                new Claim(ClaimTypes.UserData, tenantId)
             };
 
             var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);

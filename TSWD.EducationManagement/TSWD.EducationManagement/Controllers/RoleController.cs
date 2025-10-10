@@ -1,0 +1,28 @@
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using TSWD.EducationManagement.Application.Roles;
+using TSWD.EducationManagement.Shared.Helpers;
+
+namespace TSWD.EducationManagement.Controllers
+{
+    [Route("api/[controller]")]
+    [ApiController]
+    [Authorize]
+    public class RoleController : ControllerBase
+    {
+        private readonly IRoleService roleService;
+
+        public RoleController(IRoleService roleService)
+        {
+            this.roleService = roleService;
+        }
+
+        [HttpPost("[action]")]
+        public async Task<IActionResult> Get([FromQuery] Guid? tenantId, PagedRequest input)
+        {
+            var result = await roleService.Get(input, tenantId);
+            return Ok(result);
+        }
+               
+    }
+}

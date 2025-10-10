@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using TSWD.EducationManagement.Application.Users;
 using TSWD.EducationManagement.Domain.DTOs.Users;
+using TSWD.EducationManagement.Permissions;
 using TSWD.EducationManagement.Shared.Helpers;
 
 namespace TSWD.EducationManagement.Controllers
