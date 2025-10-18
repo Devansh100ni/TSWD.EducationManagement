@@ -38,5 +38,12 @@ namespace TSWD.EducationManagement.Controllers
             return Ok();
         }
 
+        [HttpGet("[action]")]
+        public async Task<IActionResult> GetRoles([FromQuery] Guid tenantId)
+        {
+            var allRoles = await roleService.Get(tenantId);
+            return Ok(allRoles);
+        }
+
     }
 }

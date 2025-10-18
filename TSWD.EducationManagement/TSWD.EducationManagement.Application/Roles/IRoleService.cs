@@ -15,5 +15,7 @@ namespace TSWD.EducationManagement.Application.Roles
         Task<List<PermissionGroupDto>> GetPermissionGroups();
 
         Task CreateUpdate(CreateUpdateRoleDto input);
+
+        Task<List<RoleDto>> Get(Guid tenantId);
     }
 }

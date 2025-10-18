@@ -30,7 +30,6 @@ namespace TSWD.EducationManagement.Permissions
                 join p in _db.AppPermissions on rp.PermissionId equals p.Id
                 join r in _db.AppRole on rp.RoleId equals r.Id
                 where userRoles.Contains(rp.RoleId)
-                      && p.Name == permissionName
                       && (r.TenantId == tenantId || tenantId == null)
                 select rp
             ).Any();

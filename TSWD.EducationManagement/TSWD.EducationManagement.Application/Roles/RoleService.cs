@@ -120,6 +120,23 @@ namespace TSWD.EducationManagement.Application.Roles
             return new PagedResult<RoleDto>(roles.ToList(), totalCount);
         }
 
+        public async Task<List<RoleDto>> Get(Guid tenantId)
+        {
+            var rolesQuery = await repository.GetAllAsync();
+            rolesQuery = rolesQuery.Where(r => r.TenantId == tenantId).ToList();
+
+            var roles = rolesQuery.Select(role =>
+            {
+                return new RoleDto
+                {
+                    Id = role.Id,
+                    Name = role.Name
+                };
+            }).ToList();
+
+            return roles;
+        }
+
         public async Task<List<PermissionGroupDto>> GetPermissionGroups()
         {
             var permissionGroups = new List<PermissionGroupDto>();
@@ -131,7 +148,7 @@ namespace TSWD.EducationManagement.Application.Roles
 
             if (role == null)
                 throw new Exception("Role not found.");
-            
+
             // Group all permissions by their prefix (e.g., "Users" from "Users.Create")
             permissionGroups = allPermissions
                 .GroupBy(p => p.Name.Split('.')[0]) // "Users" or "Students"

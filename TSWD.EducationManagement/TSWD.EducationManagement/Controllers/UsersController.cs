@@ -8,7 +8,7 @@ namespace TSWD.EducationManagement.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Permission(PermissionConstent.Users.Create)]
+    [Permission(PermissionConstent.Users.Default)]
     public class UsersController : ControllerBase
     {
         private readonly IUserService userService;
@@ -19,6 +19,7 @@ namespace TSWD.EducationManagement.Controllers
         }
 
         [HttpPost]
+        [Permission(PermissionConstent.Users.Default)]
         public async Task<IActionResult> GetUsersAsync([FromQuery] Guid? tenantId, PagedRequest input)
         {
             return Ok(await userService.GetAllUsersAsync(input, tenantId));
@@ -26,7 +27,7 @@ namespace TSWD.EducationManagement.Controllers
 
         [HttpPost("[action]")]
         [Permission(PermissionConstent.Users.Create)]
-        public async Task<IActionResult> CreateUpdateUserAsync(CreateUpdateUsersDto input)
+        public async Task<IActionResult> CreateUpdateUserAsync([FromBody] CreateUpdateUsersDto input)
         {
             var result = await userService.CreateUpdateUserAsync(input);
             if (result.Success)

@@ -17,7 +17,7 @@
                 NormalizedUserName = value?.ToUpperInvariant() ?? string.Empty;
             }
         }
-        public string NormalizedUserName { get; set; } = null!;
+        public string? NormalizedUserName { get; set; }
         public string? Name { get; set; }
         public string? Surname { get; set; }
 
@@ -33,7 +33,7 @@
             }
         }
 
-        public string NormalizedEmail { get; set; } = null!;
+        public string? NormalizedEmail { get; set; }
         public bool EmailConfirmed { get; set; } = false;
         public string? PasswordHash { get; set; }
         public string SecurityStamp { get; set; } = Guid.NewGuid().ToString();
