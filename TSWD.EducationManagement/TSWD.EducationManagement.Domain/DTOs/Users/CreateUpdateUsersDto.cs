@@ -35,7 +35,7 @@
 
         public string? NormalizedEmail { get; set; }
         public bool EmailConfirmed { get; set; } = false;
-        public string? PasswordHash { get; set; }
+        public string? PasswordHash { get; set; } = "Admin@123";
         public string SecurityStamp { get; set; } = Guid.NewGuid().ToString();
         public bool IsExternal { get; set; } = false;
         public string? PhoneNumber { get; set; }

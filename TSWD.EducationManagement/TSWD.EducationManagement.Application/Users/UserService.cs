@@ -52,6 +52,8 @@ namespace TSWD.EducationManagement.Application.Users
                     entity.ShouldChangePasswordOnNextLogin = input.ShouldChangePasswordOnNextLogin;
                     entity.LastPasswordChangeTime = input.LastPasswordChangeTime;
                     entity.EntityVersion = (entity.EntityVersion ?? 0) + 1; // increment version
+
+                    await repository.UpdateAsync(entity);
                 }
                 else
                 {

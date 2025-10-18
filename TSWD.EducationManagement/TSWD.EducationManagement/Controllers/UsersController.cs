@@ -37,6 +37,17 @@ namespace TSWD.EducationManagement.Controllers
             return BadRequest(result);
         }
 
+        [HttpGet("[action]")]
+        [Permission(PermissionConstent.Users.Default)]
+        public async Task<IActionResult> GetUserByIdAsync([FromQuery] Guid id)
+        {
+            var result = await userService.GetUserByIdAsync(id);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
 
     }
 }
