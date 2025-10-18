@@ -27,6 +27,7 @@ public partial class EducationDbContext : DbContext
     public DbSet<AppRole> AppRole { get; set; }
     public DbSet<AppPermission> AppPermissions { get; set; }
     public DbSet<AppRolePermission> AppRolePermissions { get; set; }
+    public DbSet<AppSchoolGeneralSetting> AppSchoolGeneralSettings { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         => optionsBuilder.UseSqlServer("Server=DESKTOP-6D1OCD8;Database=EducationDb;Trusted_Connection=True;TrustServerCertificate=True;");
@@ -64,6 +65,13 @@ public partial class EducationDbContext : DbContext
             b.ToTable(DbConstants.Prefix + "RolePermissions", DbConstants.DefaultSchema);
             //b.HasNoKey();
         });
+       
+        builder.Entity<AppSchoolGeneralSetting>(b =>
+        {
+            b.ToTable(DbConstants.Prefix + "SchoolGeneralSettings", DbConstants.DefaultSchema);
+            b.HasQueryFilter(e =>
+            tenantProvider != null && (!tenantProvider.TenantId.HasValue || e.TenantId == tenantProvider.TenantId));
+        });
     }
 
     public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
@@ -97,6 +105,16 @@ public partial class EducationDbContext : DbContext
             }
         }
 
+        var entriesTenant = ChangeTracker.Entries<MultiTenant>();
+
+        foreach (var entry in entriesTenant)
+        {
+            if (entry.State == EntityState.Added)
+            {
+                entry.Entity.TenantId = GetCurrentTenantId();
+            }
+        }
+
         return await base.SaveChangesAsync(cancellationToken);
     }
 
@@ -114,6 +132,22 @@ public partial class EducationDbContext : DbContext
             userId = user.FindFirst("sub")?.Value;
 
         return string.IsNullOrEmpty(userId) ? null : Guid.Parse(userId);
+    }
+
+    private Guid? GetCurrentTenantId()
+    {
+        var user = _httpContextAccessor.HttpContext?.User;
+        if (user == null || !user.Identity.IsAuthenticated)
+            return null;
+
+        // Try ASP.NET Identity's claim type
+        var tenantId = user.FindFirst(System.Security.Claims.ClaimTypes.UserData)?.Value;
+
+        // Or fallback to JWT "sub" claim
+        if (string.IsNullOrEmpty(tenantId))
+            tenantId = user.FindFirst("sub")?.Value;
+
+        return string.IsNullOrEmpty(tenantId) ? null : Guid.Parse(tenantId);
     }
 
     partial void OnModelCreatingPartial(ModelBuilder modelBuilder);

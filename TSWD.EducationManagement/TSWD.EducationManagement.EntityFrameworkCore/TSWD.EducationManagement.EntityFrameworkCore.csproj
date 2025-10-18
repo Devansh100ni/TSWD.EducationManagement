@@ -7,6 +7,7 @@
     <None Remove="Migration\01\V1_0_5__AddPermission.sql" />
     <None Remove="Migration\01\V1_0_6__AlterPermissionTable.sql" />
     <None Remove="Migration\01\V1_0_7__SeedDefaultData.sql" />
+    <None Remove="Migration\01\V1_0_8__AddSchoolGeneralSettingTable.sql" />
   </ItemGroup>
 
   <ItemGroup>
@@ -17,6 +18,7 @@
     <EmbeddedResource Include="Migration\01\V1_0_5__AddPermission.sql" />
     <EmbeddedResource Include="Migration\01\V1_0_6__AlterPermissionTable.sql" />
     <EmbeddedResource Include="Migration\01\V1_0_7__SeedDefaultData.sql" />
+    <EmbeddedResource Include="Migration\01\V1_0_8__AddSchoolGeneralSettingTable.sql" />
   </ItemGroup>
 
   <ItemGroup>

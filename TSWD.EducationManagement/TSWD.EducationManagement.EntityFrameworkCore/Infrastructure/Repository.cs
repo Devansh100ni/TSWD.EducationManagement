@@ -41,6 +41,10 @@ namespace TSWD.EducationManagement.EntityFrameworkCore.Infrastructure
 
         public async Task<IQueryable<T>> AsQueryable() => _dbSet.AsQueryable();
 
+        public async Task<T?> FindAsync(Guid id)
+        {
+            return await _dbSet.FindAsync(id);
+        }
     }
 
 }
