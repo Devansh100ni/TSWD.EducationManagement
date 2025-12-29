@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using Microsoft.OpenApi.Models;
+using Microsoft.OpenApi;
 using Swashbuckle.AspNetCore.Filters;
 using System.Reflection;
 using System.Text;
@@ -11,6 +11,7 @@ using TSWD.EducationManagement;
 using TSWD.EducationManagement.EntityFrameworkCore;
 using TSWD.EducationManagement.EntityFrameworkCore.Infrastructure;
 using TSWD.EducationManagement.Permissions;
+using TSWD.EducationManagement.Shared.Caching;
 using TSWD.EducationManagement.Shared.Providers;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -34,6 +35,13 @@ var environment = builder.Environment;
 string connectionString = environment.IsDevelopment()
     ? builder.Configuration.GetConnectionString("LocalConnection")
     : builder.Configuration.GetConnectionString("ProductionConnection");
+
+
+builder.Services.AddStackExchangeRedisCache(options =>
+{
+    options.Configuration = builder.Configuration["RedisURI"];
+    options.InstanceName = "CollageManagement:";
+});
 
 builder.Configuration["ConnectionStrings:DefaultConnection"] = connectionString;
 
@@ -60,22 +68,23 @@ foreach (var assembly in assemblies)
 // Generic repositories
 builder.Services.AddTransient(typeof(IRepository<>), typeof(Repository<>));
 builder.Services.AddTransient<ITenantProvider, TenantProvider>();
+builder.Services.AddScoped<IAppCacheService, RedisCacheService>();
 builder.Services.AddScoped<IPermissionChecker, PermissionChecker>();
 
 builder.Services.AddSwaggerGen(options =>
 {
     options.SwaggerDoc("v1", new OpenApiInfo
     {
-        Title = "My API",
+        Title = "Collage Management Tool",
         Version = "v1",
-        Description = "Example .NET 9 Web API with Swagger",
+        Description = "A tool which is used to handle the oprationes of Collage Management",
         Contact = new OpenApiContact
         {
-            Name = "Your Name",
+            Name = "CodeArdra Solutions",
             Email = "you@example.com"
         }
     });
-    options.AddSecurityDefinition("oauth2", new Microsoft.OpenApi.Models.OpenApiSecurityScheme
+    options.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
     {
         Description = "Standard Authorization header using the Bearer Scheme(\"bearer {token}\"",
         In = ParameterLocation.Header,
