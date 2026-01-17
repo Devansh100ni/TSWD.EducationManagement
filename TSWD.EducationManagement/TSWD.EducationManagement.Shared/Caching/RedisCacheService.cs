@@ -1,4 +1,6 @@
 ﻿using Microsoft.Extensions.Caching.Distributed;
+using Microsoft.Extensions.Logging;
+using StackExchange.Redis;
 using System.Text.Json;
 
 namespace TSWD.EducationManagement.Shared.Caching
@@ -6,10 +8,12 @@ namespace TSWD.EducationManagement.Shared.Caching
     public class RedisCacheService : IAppCacheService
     {
         private readonly IDistributedCache _cache;
+        private readonly ILogger<RedisCacheService> logger;
 
-        public RedisCacheService(IDistributedCache cache)
+        public RedisCacheService(IDistributedCache cache, ILogger<RedisCacheService> logger)
         {
             _cache = cache;
+            this.logger = logger;
         }
 
         public async Task<T> GetOrSetAsync<T>(
@@ -17,23 +21,31 @@ namespace TSWD.EducationManagement.Shared.Caching
             Func<Task<T>> factory,
             CancellationToken cancellationToken = default)
         {
-            var cachedData = await _cache.GetStringAsync(key, cancellationToken);
-
-            if (!string.IsNullOrEmpty(cachedData))
+            try
             {
-                return JsonSerializer.Deserialize<T>(cachedData)!;
+                var cachedData = await _cache.GetStringAsync(key, cancellationToken);
+
+                if (!string.IsNullOrEmpty(cachedData))
+                {
+                    return JsonSerializer.Deserialize<T>(cachedData)!;
+                }
+
+                var data = await factory();
+
+                await _cache.SetStringAsync(
+                    key,
+                    JsonSerializer.Serialize(data),
+                    CacheOptionsProvider.Default,
+                    cancellationToken
+                );
+                return data;
+            }
+            catch (Exception ex)
+            {
+                logger.LogError($"Error Occered while Get or Set Radis Exception: \n Message: {ex.Message} \n Stack trace: {ex.StackTrace} \n ==================================================");
+                throw;
             }
 
-            var data = await factory();
-
-            await _cache.SetStringAsync(
-                key,
-                JsonSerializer.Serialize(data),
-                CacheOptionsProvider.Default,
-                cancellationToken
-            );
-
-            return data;
         }
 
         public async Task RemoveAsync(string key, CancellationToken cancellationToken = default)

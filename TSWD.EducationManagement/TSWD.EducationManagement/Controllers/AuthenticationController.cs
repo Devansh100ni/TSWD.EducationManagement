@@ -1,12 +1,14 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System.Text.Json;
 using TSWD.EducationManagement.Application.Authentication;
+using TSWD.EducationManagement.Controllers.Base;
 using TSWD.EducationManagement.Domain.DTOs.Auth;
 
 namespace TSWD.EducationManagement.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AuthenticationController : ControllerBase
+    public class AuthenticationController : CommonControllerBase
     {
         private readonly IAuthService authService;
 
@@ -18,19 +20,18 @@ namespace TSWD.EducationManagement.Controllers
         [HttpPost]
         public async Task<IActionResult> Post(LoginRequest request)
         {
-            try
+            string email = request.Email ?? "No Email Provided";
+            string dtoJson = JsonSerializer.Serialize(new
             {
-                var user = await authService.LoginAsync(request);
-                return Ok(user);
-            }
-            catch (UnauthorizedAccessException ex)
+                email,
+                Password = "[REDACTED]"
+            });
+
+            return await ExecuteAsync(async () =>
             {
-                return StatusCode(401);
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
+                var response = await authService.LoginAsync(request);
+                return response;
+            }, nameof(authService.LoginAsync), dtoJson);
         }
     }
 }

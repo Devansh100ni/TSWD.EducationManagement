@@ -1,6 +1,6 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using TSWD.EducationManagement.Application.Roles;
+using TSWD.EducationManagement.Controllers.Base;
 using TSWD.EducationManagement.Domain.DTOs.Role;
 using TSWD.EducationManagement.Shared.Helpers;
 
@@ -8,42 +8,46 @@ namespace TSWD.EducationManagement.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class RoleController : ControllerBase
+    public class RoleController(IRoleService roleService) : CommonControllerBase
     {
-        private readonly IRoleService roleService;
-
-        public RoleController(IRoleService roleService)
-        {
-            this.roleService = roleService;
-        }
-
         [HttpPost("[action]")]
         public async Task<IActionResult> Get([FromQuery] Guid? tenantId, PagedRequest input)
         {
-            var result = await roleService.Get(input, tenantId);
-            return Ok(result);
+            return await ExecuteAsync(async () =>
+            {
+                var response = await roleService.Get(input, tenantId);
+                return response;
+            }, nameof(Get));
         }
 
         [HttpGet("[action]")]
         public async Task<IActionResult> GetPermissions()
         {
-            var result = await roleService.GetPermissionGroups();
-            return Ok(result);
+            return await ExecuteAsync(async () =>
+            {
+                var response = await roleService.GetPermissionGroups();
+                return response;
+            }, nameof(Get));
         }
 
         [HttpPost("[action]")]
         public async Task<IActionResult> CreateUpdate([FromBody] CreateUpdateRoleDto input)
         {
-            await roleService.CreateUpdate(input);
-            return Ok();
+            return await ExecuteAsync(async () =>
+            {
+                await roleService.CreateUpdate(input);
+                return Ok();
+            }, nameof(CreateUpdate));
         }
 
         [HttpGet("[action]")]
         public async Task<IActionResult> GetRoles([FromQuery] Guid tenantId)
         {
-            var allRoles = await roleService.Get(tenantId);
-            return Ok(allRoles);
+            return await ExecuteAsync(async () =>
+            {
+                var resopnse = await roleService.Get(tenantId);
+                return resopnse;
+            }, nameof(GetRoles));
         }
-
     }
 }

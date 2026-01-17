@@ -94,14 +94,18 @@ builder.Services.AddSwaggerGen(options =>
     options.OperationFilter<SecurityRequirementsOperationFilter>();
 });
 
+var allowedOrigins = builder.Configuration
+    .GetSection("Cors:AllowedOrigins")
+    .Get<string[]>();
+
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowSpecificOrigin",
         builder =>
         {
-            builder.WithOrigins("http://educationmanagement-api.somee.com").WithOrigins("http://localhost:4200")
-            .AllowAnyHeader()
-            .AllowAnyMethod().AllowAnyOrigin();
+            builder.WithOrigins(allowedOrigins!)
+              .AllowAnyHeader()
+              .AllowAnyMethod();
         });
 });
 
@@ -127,7 +131,7 @@ SeedPermissions(app);
 
 // Configure the HTTP request pipeline.
 //if (app.Environment.IsDevelopment())
-{
+//{
     app.UseSwagger();
     app.UseSwaggerUI(options =>
     {
@@ -135,7 +139,7 @@ SeedPermissions(app);
         options.RoutePrefix = string.Empty; // Swagger at root URL
     });
     app.MapOpenApi();
-}
+//}
 
 app.UseHttpsRedirection();
 app.UseCors("AllowSpecificOrigin");
