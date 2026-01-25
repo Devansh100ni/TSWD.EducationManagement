@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using TSWD.EducationManagement.Application.Users;
+using TSWD.EducationManagement.Controllers.Base;
 using TSWD.EducationManagement.Domain.DTOs.Users;
 using TSWD.EducationManagement.Permissions;
 using TSWD.EducationManagement.Shared.Helpers;
@@ -9,7 +10,7 @@ namespace TSWD.EducationManagement.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [Permission(PermissionConstent.Users.Default)]
-    public class UsersController : ControllerBase
+    public class UsersController : CommonControllerBase
     {
         private readonly IUserService userService;
 
@@ -22,31 +23,33 @@ namespace TSWD.EducationManagement.Controllers
         [Permission(PermissionConstent.Users.Default)]
         public async Task<IActionResult> GetUsersAsync([FromQuery] Guid? tenantId, PagedRequest input)
         {
-            return Ok(await userService.GetAllUsersAsync(input, tenantId));
+            return await ExecuteAsync(async () =>
+            {
+                var respoonse = await userService.GetAllUsersAsync(input, tenantId);
+                return respoonse;
+            });
         }
 
         [HttpPost("[action]")]
         [Permission(PermissionConstent.Users.Create)]
         public async Task<IActionResult> CreateUpdateUserAsync([FromBody] CreateUpdateUsersDto input)
         {
-            var result = await userService.CreateUpdateUserAsync(input);
-            if (result.Success)
+            return await ExecuteAsync(async () =>
             {
-                return Ok(result);
-            }
-            return BadRequest(result);
+                var result = await userService.CreateUpdateUserAsync(input);
+                return result; 
+            });
         }
 
         [HttpGet("[action]")]
         [Permission(PermissionConstent.Users.Default)]
         public async Task<IActionResult> GetUserByIdAsync([FromQuery] Guid id)
         {
-            var result = await userService.GetUserByIdAsync(id);
-            if (result.Success)
+            return await ExecuteAsync(async () =>
             {
-                return Ok(result);
-            }
-            return BadRequest(result);
+                var result = await userService.GetUserByIdAsync(id);
+                return result;
+            });
         }
 
     }

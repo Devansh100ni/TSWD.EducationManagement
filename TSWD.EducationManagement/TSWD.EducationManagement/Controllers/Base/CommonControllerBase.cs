@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.Net;
 using TSWD.EducationManagement.Domain.Base;
 using TSWD.EducationManagement.Shared.Common;
+using TSWD.EducationManagement.Shared.Helpers;
 using TSWD.EducationManagement.Shared.Logging;
 
 namespace TSWD.EducationManagement.Controllers.Base
@@ -29,6 +30,20 @@ namespace TSWD.EducationManagement.Controllers.Base
 
                 if (response is IActionResult actionResult)
                     return actionResult;
+
+                if (response != null && IsResultType(response))
+                {
+                    dynamic result = response;
+
+                    if (result.Success)
+                        return Ok(result);
+
+                    statusCode = StatusCodes.Status400BadRequest;
+                    return BadRequest(new
+                    {
+                        message = result.Message
+                    });
+                }
 
                 return Ok(response);
             }
@@ -81,6 +96,12 @@ namespace TSWD.EducationManagement.Controllers.Base
 
             var result = StatusCode((int)statusCode, new { error = message });
             return ((int)statusCode, result);
+        }
+
+        private static bool IsResultType(object response)
+        {
+            var type = response.GetType();
+            return type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Result<>);
         }
     }
 }
