@@ -9,6 +9,8 @@
     <None Remove="Migration\01\V1_0_7__SeedDefaultData.sql" />
     <None Remove="Migration\01\V1_0_8__AddSchoolGeneralSettingTable.sql" />
     <None Remove="Migration\01\V1_0_9__ApiLogsTable.sql" />
+    <None Remove="Migration\02\V1_0_10__SchoolAcadmicTable.sql" />
+    <None Remove="Migration\02\V1_0_11__AlterTableAppPromotionRules.sql" />
   </ItemGroup>
 
   <ItemGroup>
@@ -21,6 +23,10 @@
     <EmbeddedResource Include="Migration\01\V1_0_7__SeedDefaultData.sql" />
     <EmbeddedResource Include="Migration\01\V1_0_8__AddSchoolGeneralSettingTable.sql" />
     <EmbeddedResource Include="Migration\01\V1_0_9__ApiLogsTable.sql" />
+    <EmbeddedResource Include="Migration\02\V1_0_10__SchoolAcadmicTable.sql">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migration\02\V1_0_11__AlterTableAppPromotionRules.sql" />
   </ItemGroup>
 
   <ItemGroup>

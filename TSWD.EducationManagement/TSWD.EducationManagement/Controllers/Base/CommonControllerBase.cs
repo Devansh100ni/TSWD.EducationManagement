@@ -11,7 +11,7 @@ namespace TSWD.EducationManagement.Controllers.Base
     public class CommonControllerBase : ControllerBase
     {
         protected async Task<IActionResult> ExecuteAsync<TResponse>(
-           Func<Task<TResponse>> action,
+           Func<CancellationToken, Task<TResponse>> action,
            string? methodName = null,
            string? optionalBody = null)
         {
@@ -21,7 +21,9 @@ namespace TSWD.EducationManagement.Controllers.Base
 
             try
             {
-                var response = await action();
+                var cancellationToken = HttpContext.RequestAborted;
+
+                var response = await action(cancellationToken);
                 stopwatch.Stop();
 
                 // If response implements IResponse, populate TimeTaken
@@ -46,6 +48,12 @@ namespace TSWD.EducationManagement.Controllers.Base
                 }
 
                 return Ok(response);
+            }
+            catch (OperationCanceledException)
+            {
+                stopwatch.Stop();
+                statusCode = StatusCodes.Status499ClientClosedRequest; // Client closed request
+                return StatusCode(statusCode, new { message = "Request was canceled." });
             }
             catch (Exception ex)
             {

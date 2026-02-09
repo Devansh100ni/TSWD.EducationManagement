@@ -376,7 +376,7 @@ Each school operates independently in your system — so everything below is **s
 | ----------------------- | --------------------------------------- |
 | Grading Policy          | Percentage → Grade (e.g., 90–100 = A+)  |
 | Promotion Rules         | Required marks or attendance %          |
-| Subjects per Class      | Number of subjects per grade            |  ---
+| Subjects per Class      | Number of subjects per grade            |  
 | Evaluation Criteria     | Weightage for exam, assignment, project |  ---
 | Class Strength Limit    | Max students per class                  |  ---
 | Attendance Rules        | Half-day/full-day logic, grace period   |  ---

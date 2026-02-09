@@ -23,7 +23,7 @@ namespace TSWD.EducationManagement.Controllers
         [Permission(PermissionConstent.Users.Default)]
         public async Task<IActionResult> GetUsersAsync([FromQuery] Guid? tenantId, PagedRequest input)
         {
-            return await ExecuteAsync(async () =>
+            return await ExecuteAsync(async ct =>
             {
                 var respoonse = await userService.GetAllUsersAsync(input, tenantId);
                 return respoonse;
@@ -34,7 +34,7 @@ namespace TSWD.EducationManagement.Controllers
         [Permission(PermissionConstent.Users.Create)]
         public async Task<IActionResult> CreateUpdateUserAsync([FromBody] CreateUpdateUsersDto input)
         {
-            return await ExecuteAsync(async () =>
+            return await ExecuteAsync(async ct =>
             {
                 var result = await userService.CreateUpdateUserAsync(input);
                 return result; 
@@ -45,7 +45,7 @@ namespace TSWD.EducationManagement.Controllers
         [Permission(PermissionConstent.Users.Default)]
         public async Task<IActionResult> GetUserByIdAsync([FromQuery] Guid id)
         {
-            return await ExecuteAsync(async () =>
+            return await ExecuteAsync(async ct =>
             {
                 var result = await userService.GetUserByIdAsync(id);
                 return result;

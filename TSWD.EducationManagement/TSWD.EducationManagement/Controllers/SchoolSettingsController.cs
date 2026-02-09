@@ -18,7 +18,7 @@ namespace TSWD.EducationManagement.Controllers
         [HttpGet("{tenantId}")]
         public async Task<IActionResult> GetSchoolGeneralSettingsAsync(Guid tenantId, CancellationToken cancellationToken = default)
         {
-            return await ExecuteAsync(async () =>
+            return await ExecuteAsync(async ct =>
             {
                 var cacheKey = CacheKeys.SchoolGeneralSettings(tenantId);
 
@@ -46,7 +46,7 @@ namespace TSWD.EducationManagement.Controllers
         [HttpPut]
         public async Task<IActionResult> UpdateSchoolGeneralSettingsAsync([FromBody] UpdateSchoolGeneralSettingDto input, CancellationToken cancellationToken = default)
         {
-            return await ExecuteAsync(async () =>
+            return await ExecuteAsync(async ct =>
             {
                 var cacheKey = CacheKeys.SchoolGeneralSettings();
                 await cache.RemoveAsync(cacheKey, cancellationToken);
@@ -70,5 +70,7 @@ namespace TSWD.EducationManagement.Controllers
 
             }, nameof(UpdateSchoolGeneralSettingsAsync));
         }
+
+
     }
 }

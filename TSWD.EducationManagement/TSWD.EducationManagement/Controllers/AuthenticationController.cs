@@ -27,7 +27,7 @@ namespace TSWD.EducationManagement.Controllers
                 Password = "[REDACTED]"
             });
 
-            return await ExecuteAsync(async () =>
+            return await ExecuteAsync(async ct =>
             {
                 var response = await authService.LoginAsync(request);
                 return response;

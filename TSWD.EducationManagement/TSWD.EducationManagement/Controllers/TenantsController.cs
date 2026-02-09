@@ -20,7 +20,7 @@ namespace TSWD.EducationManagement.Controllers
         [HttpPost("[action]")]
         public async Task<IActionResult> GetTenantListAsync(PagedRequest request)
         {
-            return await ExecuteAsync(async () =>
+            return await ExecuteAsync(async ct =>
             {
                 var response = await tenantService.ListOfTenants(request.PageNumber, request.PageSize);
                 return response;
@@ -30,7 +30,7 @@ namespace TSWD.EducationManagement.Controllers
         [HttpPost("CreateOrUpdate")]
         public async Task<IActionResult> PostAsync([FromForm] CreateUpdateTenantDto dto)
         {
-            return await ExecuteAsync(async () =>
+            return await ExecuteAsync(async ct =>
             {
                 var response = await tenantService.CreateUpdateTenant(dto);
                 return response;
@@ -40,7 +40,7 @@ namespace TSWD.EducationManagement.Controllers
         [HttpGet]
         public async Task<IActionResult> Get(Guid id)
         {
-            return await ExecuteAsync(async () =>
+            return await ExecuteAsync(async ct =>
             {
                 var response = await tenantService.GetById(id);
                 return response;

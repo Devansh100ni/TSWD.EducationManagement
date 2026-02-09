@@ -29,6 +29,15 @@ public partial class EducationDbContext : DbContext
     public DbSet<AppRolePermission> AppRolePermissions => Set<AppRolePermission>();
     public DbSet<AppSchoolGeneralSetting> AppSchoolGeneralSettings => Set<AppSchoolGeneralSetting>();
     public DbSet<AppApiRequestLog> AppApiRequestLogs => Set<AppApiRequestLog>();
+    public DbSet<AppClass> AppClasses => Set<AppClass>();
+    public DbSet<AppFilter> AppFilters => Set<AppFilter>();
+    public DbSet<AppGradePolicy> AppGradePolicies => Set<AppGradePolicy>();
+    public DbSet<AppPromotionRule> AppPromotionRules => Set<AppPromotionRule>();
+    public DbSet<AppSchoolRule> AppSchoolRules => Set<AppSchoolRule>();
+    public DbSet<AppSection> AppSections => Set<AppSection>();
+    public DbSet<AppSubject> AppSubjects => Set<AppSubject>();
+
+
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         => optionsBuilder.UseSqlServer("Server=DESKTOP-6D1OCD8;Database=EducationDb;Trusted_Connection=True;TrustServerCertificate=True;");
@@ -70,6 +79,55 @@ public partial class EducationDbContext : DbContext
         builder.Entity<AppSchoolGeneralSetting>(b =>
         {
             b.ToTable(DbConstants.Prefix + "SchoolGeneralSettings", DbConstants.DefaultSchema);
+            b.HasQueryFilter(e =>
+            tenantProvider != null && (!tenantProvider.TenantId.HasValue || e.TenantId == tenantProvider.TenantId));
+        });
+
+        builder.Entity<AppClass>(b =>
+        {
+            b.ToTable(DbConstants.Prefix + "Classes", DbConstants.DefaultSchema);
+            b.HasQueryFilter(e =>
+            tenantProvider != null && (!tenantProvider.TenantId.HasValue || e.TenantId == tenantProvider.TenantId));
+        });
+
+        builder.Entity<AppFilter>(b =>
+        {
+            b.ToTable(DbConstants.Prefix + "Filter", DbConstants.DefaultSchema);
+            b.HasQueryFilter(e =>
+            tenantProvider != null && (!tenantProvider.TenantId.HasValue || e.TenantId == tenantProvider.TenantId));
+        });
+
+        builder.Entity<AppPromotionRule>(b =>
+        {
+            b.ToTable(DbConstants.Prefix + "PromotionRules", DbConstants.DefaultSchema);
+            b.HasQueryFilter(e =>
+            tenantProvider != null && (!tenantProvider.TenantId.HasValue || e.TenantId == tenantProvider.TenantId));
+        });
+        
+        builder.Entity<AppGradePolicy>(b =>
+        {
+            b.ToTable(DbConstants.Prefix + "GradePolicies", DbConstants.DefaultSchema);
+            b.HasQueryFilter(e =>
+            tenantProvider != null && (!tenantProvider.TenantId.HasValue || e.TenantId == tenantProvider.TenantId));
+        });
+
+        builder.Entity<AppSchoolRule>(b =>
+        {
+            b.ToTable(DbConstants.Prefix + "SchoolRules", DbConstants.DefaultSchema);
+            b.HasQueryFilter(e =>
+            tenantProvider != null && (!tenantProvider.TenantId.HasValue || e.TenantId == tenantProvider.TenantId));
+        });
+        
+        builder.Entity<AppSubject>(b =>
+        {
+            b.ToTable(DbConstants.Prefix + "AppSubjects", DbConstants.DefaultSchema);
+            b.HasQueryFilter(e =>
+            tenantProvider != null && (!tenantProvider.TenantId.HasValue || e.TenantId == tenantProvider.TenantId));
+        });
+        
+        builder.Entity<AppSection>(b =>
+        {
+            b.ToTable(DbConstants.Prefix + "Sections", DbConstants.DefaultSchema);
             b.HasQueryFilter(e =>
             tenantProvider != null && (!tenantProvider.TenantId.HasValue || e.TenantId == tenantProvider.TenantId));
         });
