@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using TSWD.EducationManagement.Domain.Entities;
+﻿using TSWD.EducationManagement.Domain.Entities;
 
 namespace TSWD.EducationManagement.Domain.DTOs.Auth
 {

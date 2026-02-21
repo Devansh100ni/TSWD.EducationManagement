@@ -132,13 +132,13 @@ SeedPermissions(app);
 // Configure the HTTP request pipeline.
 //if (app.Environment.IsDevelopment())
 //{
-    app.UseSwagger();
-    app.UseSwaggerUI(options =>
-    {
-        options.SwaggerEndpoint("/swagger/v1/swagger.json", "My API v1");
-        options.RoutePrefix = string.Empty; // Swagger at root URL
-    });
-    app.MapOpenApi();
+app.UseSwagger();
+app.UseSwaggerUI(options =>
+{
+    options.SwaggerEndpoint("/swagger/v1/swagger.json", "My API v1");
+    options.RoutePrefix = string.Empty; // Swagger at root URL
+});
+app.MapOpenApi();
 //}
 
 app.UseHttpsRedirection();

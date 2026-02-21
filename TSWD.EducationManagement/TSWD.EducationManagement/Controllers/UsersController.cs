@@ -37,7 +37,7 @@ namespace TSWD.EducationManagement.Controllers
             return await ExecuteAsync(async ct =>
             {
                 var result = await userService.CreateUpdateUserAsync(input);
-                return result; 
+                return result;
             });
         }
 

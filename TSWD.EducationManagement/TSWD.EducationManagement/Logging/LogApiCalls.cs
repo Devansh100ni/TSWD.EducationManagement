@@ -68,7 +68,7 @@ namespace TSWD.EducationManagement.Shared.Logging
             {
                 userId = parsedGuid;
             }
-            
+
             if (tenantIdClaim != null && Guid.TryParse(tenantIdClaim, out Guid parsedTenantIdGuid))
             {
                 tenantId = parsedTenantIdGuid;

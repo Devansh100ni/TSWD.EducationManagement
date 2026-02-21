@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using TSWD.EducationManagement.Domain.Extentions;
+﻿using TSWD.EducationManagement.Domain.Extentions;
 
 namespace TSWD.EducationManagement.Domain.Entities
 {

@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace TSWD.EducationManagement.Domain.DTOs.Role
+﻿namespace TSWD.EducationManagement.Domain.DTOs.Role
 {
     public class PermissionGroupDto
     {

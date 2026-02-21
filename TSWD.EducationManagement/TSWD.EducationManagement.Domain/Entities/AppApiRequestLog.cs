@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace TSWD.EducationManagement.Domain.Entities
+﻿namespace TSWD.EducationManagement.Domain.Entities
 {
     public class AppApiRequestLog
     {

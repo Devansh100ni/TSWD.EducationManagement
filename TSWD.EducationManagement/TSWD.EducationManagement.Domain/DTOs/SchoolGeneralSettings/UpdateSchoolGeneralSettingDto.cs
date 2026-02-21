@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace TSWD.EducationManagement.Domain.DTOs.SchoolGeneralSettings
+﻿namespace TSWD.EducationManagement.Domain.DTOs.SchoolGeneralSettings
 {
     public class UpdateSchoolGeneralSettingDto
     {

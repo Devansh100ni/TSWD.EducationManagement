@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using TSWD.EducationManagement.Domain.Extentions;
+﻿using TSWD.EducationManagement.Domain.Extentions;
 
 namespace TSWD.EducationManagement.Domain.Entities
 {
@@ -12,7 +9,7 @@ namespace TSWD.EducationManagement.Domain.Entities
 
         public Guid ClassId { get; set; }
 
-        public bool  IsOptional { get; set; } = false;
+        public bool IsOptional { get; set; } = false;
 
         public Guid? UserId { get; set; }
         public Guid? TenantId { get; set; }

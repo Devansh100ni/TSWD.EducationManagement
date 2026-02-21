@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TSWD.EducationManagement.Domain.Entities;
+﻿using TSWD.EducationManagement.Domain.Entities;
 
 namespace TSWD.EducationManagement.Permissions
 {

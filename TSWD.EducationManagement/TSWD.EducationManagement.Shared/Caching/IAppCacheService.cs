@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace TSWD.EducationManagement.Shared.Caching
+﻿namespace TSWD.EducationManagement.Shared.Caching
 {
     public interface IAppCacheService
     {

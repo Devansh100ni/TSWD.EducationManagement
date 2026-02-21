@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
-using TSWD.EducationManagement.Shared.Providers;
 using TSWD.EducationManagement.Domain.Entities;
 using TSWD.EducationManagement.Domain.Extentions;
+using TSWD.EducationManagement.Shared.Providers;
 
 namespace TSWD.EducationManagement.EntityFrameworkCore;
 
@@ -39,8 +39,8 @@ public partial class EducationDbContext : DbContext
 
 
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        => optionsBuilder.UseSqlServer("Server=DESKTOP-6D1OCD8;Database=EducationDb;Trusted_Connection=True;TrustServerCertificate=True;");
+    //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    //    => optionsBuilder.UseSqlServer("Server=DESKTOP-6D1OCD8;Database=EducationDb;Trusted_Connection=True;TrustServerCertificate=True;");
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
@@ -69,13 +69,13 @@ public partial class EducationDbContext : DbContext
         {
             b.ToTable(DbConstants.Prefix + "Permissions", DbConstants.DefaultSchema);
         });
-       
+
         builder.Entity<AppRolePermission>(b =>
         {
             b.ToTable(DbConstants.Prefix + "RolePermissions", DbConstants.DefaultSchema);
             //b.HasNoKey();
         });
-       
+
         builder.Entity<AppSchoolGeneralSetting>(b =>
         {
             b.ToTable(DbConstants.Prefix + "SchoolGeneralSettings", DbConstants.DefaultSchema);
@@ -103,7 +103,7 @@ public partial class EducationDbContext : DbContext
             b.HasQueryFilter(e =>
             tenantProvider != null && (!tenantProvider.TenantId.HasValue || e.TenantId == tenantProvider.TenantId));
         });
-        
+
         builder.Entity<AppGradePolicy>(b =>
         {
             b.ToTable(DbConstants.Prefix + "GradePolicies", DbConstants.DefaultSchema);
@@ -117,14 +117,14 @@ public partial class EducationDbContext : DbContext
             b.HasQueryFilter(e =>
             tenantProvider != null && (!tenantProvider.TenantId.HasValue || e.TenantId == tenantProvider.TenantId));
         });
-        
+
         builder.Entity<AppSubject>(b =>
         {
-            b.ToTable(DbConstants.Prefix + "AppSubjects", DbConstants.DefaultSchema);
+            b.ToTable(DbConstants.Prefix + "Subjects", DbConstants.DefaultSchema);
             b.HasQueryFilter(e =>
             tenantProvider != null && (!tenantProvider.TenantId.HasValue || e.TenantId == tenantProvider.TenantId));
         });
-        
+
         builder.Entity<AppSection>(b =>
         {
             b.ToTable(DbConstants.Prefix + "Sections", DbConstants.DefaultSchema);

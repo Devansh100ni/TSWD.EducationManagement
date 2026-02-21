@@ -20,7 +20,7 @@ namespace TSWD.EducationManagement.Application.SchoolGeneralSettings
         {
             try
             {
-                var result = (await repository.AsQueryable()).Where(x=>x.TenantId == tenantId).FirstOrDefault();
+                var result = (await repository.AsQueryable()).Where(x => x.TenantId == tenantId).FirstOrDefault();
 
                 if (result == null)
                 {

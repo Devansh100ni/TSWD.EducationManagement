@@ -1,6 +1,4 @@
-﻿using TSWD.EducationManagement.Domain.Entities;
-
-namespace TSWD.EducationManagement.Domain.DTOs.Role
+﻿namespace TSWD.EducationManagement.Domain.DTOs.Role
 {
     public class CreateUpdateRoleDto
     {

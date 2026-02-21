@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace TSWD.EducationManagement.Shared.Common
+﻿namespace TSWD.EducationManagement.Shared.Common
 {
     public static class Constants
     {

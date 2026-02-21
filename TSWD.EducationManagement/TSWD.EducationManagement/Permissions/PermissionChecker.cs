@@ -1,5 +1,4 @@
-﻿using System;
-using TSWD.EducationManagement.EntityFrameworkCore;
+﻿using TSWD.EducationManagement.EntityFrameworkCore;
 using TSWD.EducationManagement.Shared.Providers;
 
 namespace TSWD.EducationManagement.Permissions

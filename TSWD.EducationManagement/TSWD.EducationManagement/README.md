@@ -1,31 +1,31 @@
 ﻿## Dependency Diagram
 
-                ┌──────────────────────────────┐
-                │   TSWD.EducationManagement   │   (API / Presentation)
-                └───────────────┬──────────────┘
-                                │
-                                ▼
-                ┌──────────────────────────────┐
-                │ TSWD.EducationManagement.App │   (Application Layer)
-                └───────┬─────────┬────────────┘
-                        │         │
-       ┌────────────────┘         └────────────────┐
-       ▼                                           ▼
-┌──────────────────────────────┐       ┌──────────────────────────────┐
-│ TSWD.EducationManagement.EF  │       │ TSWD.EducationManagement.Dapper │  (Infrastructure)
-└───────────────┬──────────────┘       └──────────────┬───────────────┘
-                │                                     │
-                ▼                                     ▼
-      ┌──────────────────────────────┐       ┌──────────────────────────────┐
-      │   TSWD.EducationManagement   │       │   TSWD.EducationManagement   │
-      │           .Domain            │       │           .Domain            │
-      └──────────────────────────────┘       └──────────────────────────────┘
-                                │
-                                ▼
-                ┌──────────────────────────────┐
-                │   TSWD.EducationManagement   │   (Shared Utilities)
-                │            .Shared           │
-                └──────────────────────────────┘
+                          ┌──────────────────────────────┐
+                          │   TSWD.EducationManagement   │   (API / Presentation)
+                          └───────────────┬──────────────┘
+                                          │
+                                          ▼
+                          ┌──────────────────────────────┐
+                          │ TSWD.EducationManagement.App │   (Application Layer)
+                          └───────┬─────────┬────────────┘
+                                  │         │
+                 ┌────────────────┘         └────────────────┐
+                 ▼                                           ▼
+    ┌──────────────────────────────┐       ┌──────────────────────────────┐
+    │ TSWD.EducationManagement.EF  │       │ TSWD.EducationManagement.Dapper │  (Infrastructure)
+    └───────────────┬──────────────┘       └──────────────┬───────────────┘
+                    │                                     │
+                    ▼                                     ▼
+          ┌──────────────────────────────┐       ┌──────────────────────────────┐
+          │   TSWD.EducationManagement   │       │   TSWD.EducationManagement   │
+          │           .Domain            │       │           .Domain            │
+          └──────────────────────────────┘       └──────────────────────────────┘
+                                    │
+                                    ▼
+                    ┌──────────────────────────────┐
+                    │   TSWD.EducationManagement   │   (Shared Utilities)
+                    │            .Shared           │
+                    └──────────────────────────────┘
 
 
 ## Scaffold Command

@@ -1,6 +1,5 @@
 ﻿using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Logging;
-using StackExchange.Redis;
 using System.Text.Json;
 
 namespace TSWD.EducationManagement.Shared.Caching

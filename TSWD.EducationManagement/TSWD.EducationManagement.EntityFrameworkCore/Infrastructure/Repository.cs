@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
 
 namespace TSWD.EducationManagement.EntityFrameworkCore.Infrastructure
 {
@@ -8,42 +9,68 @@ namespace TSWD.EducationManagement.EntityFrameworkCore.Infrastructure
         private readonly EducationDbContext _context;
         private readonly DbSet<T> _dbSet;
 
-        public Repository(EducationDbContext context)
+        public Repository(EducationDbContext context, CancellationToken ct = default)
         {
             _context = context;
             _dbSet = context.Set<T>();
         }
 
-        public async Task<T?> GetByIdAsync(Guid id) => await _dbSet.FindAsync(id);
+        public async Task<T?> GetByIdAsync(Guid id, CancellationToken ct = default) => await _dbSet.FindAsync(id, ct);
 
-        public async Task<IEnumerable<T>> GetAllAsync() => await _dbSet.ToListAsync();
+        public async Task<IEnumerable<T>> GetAllAsync(CancellationToken ct = default) => await _dbSet.ToListAsync(cancellationToken: ct);
 
-        public async Task<T> AddAsync(T entity)
+        public async Task<IEnumerable<TResult>> GetAllAsync<TResult>(Expression<Func<T, TResult>> selector, CancellationToken ct = default) => await _dbSet
+                .Select(selector)
+                .ToListAsync(ct);
+
+        public async Task<IEnumerable<TResult>> GetAllAsync<TResult>(Expression<Func<T, bool>> predicate, Expression<Func<T, TResult>> selector, CancellationToken cancellationToken = default)
         {
-            var addedEntry = await _dbSet.AddAsync(entity);
-            await _context.SaveChangesAsync();
+            return await _dbSet
+                .Where(predicate)
+                .Select(selector)
+                .ToListAsync(cancellationToken);
+        }
+
+        public async Task<IEnumerable<TResult>> GetAllNoTrackingAsync<TResult>(Expression<Func<T, bool>> predicate, Expression<Func<T, TResult>> selector, CancellationToken cancellationToken = default)
+        {
+            return await _dbSet
+                .AsNoTracking()
+                .Where(predicate)
+                .Select(selector)
+                .ToListAsync(cancellationToken);
+        }
+
+        public async Task<IEnumerable<T>> GetAllNoTrackingAsync(CancellationToken ct = default)
+        => await _dbSet
+                .AsNoTracking()
+                .ToListAsync(ct);
+
+        public async Task<T> AddAsync(T entity, CancellationToken ct = default)
+        {
+            var addedEntry = await _dbSet.AddAsync(entity, ct);
+            await _context.SaveChangesAsync(ct);
             return addedEntry.Entity;
         }
 
-        public async Task UpdateAsync(T entity)
+        public async Task UpdateAsync(T entity, CancellationToken ct = default)
         {
             _dbSet.Update(entity);
-            await _context.SaveChangesAsync();
+            await _context.SaveChangesAsync(ct);
         }
 
-        public async Task DeleteAsync(T entity)
+        public async Task DeleteAsync(T entity, CancellationToken ct = default)
         {
             _dbSet.Remove(entity);
-            await _context.SaveChangesAsync();
+            await _context.SaveChangesAsync(ct);
         }
 
-        public async Task<int> SaveChangesAsync() => await _context.SaveChangesAsync();
+        public async Task<int> SaveChangesAsync(CancellationToken ct = default) => await _context.SaveChangesAsync(ct);
 
-        public async Task<IQueryable<T>> AsQueryable() => _dbSet.AsQueryable();
+        public async Task<IQueryable<T>> AsQueryable(CancellationToken ct = default) => _dbSet.AsQueryable();
 
-        public async Task<T?> FindAsync(Guid id)
+        public async Task<T?> FindAsync(Guid id, CancellationToken ct = default)
         {
-            return await _dbSet.FindAsync(id);
+            return await _dbSet.FindAsync(id, ct);
         }
     }
 
