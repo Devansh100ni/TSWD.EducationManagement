@@ -5,5 +5,7 @@ namespace TSWD.EducationManagement.Application.SchoolAcademicSettings
     public interface ISchoolAcademicSettings
     {
         Task<AcademicSettingsDto> GetAcademicSettingsAsync(Guid tenantId, CancellationToken cancellationToken = default);
+
+        Task CreateUpdateRules(Guid tenantId, CreateUpdateAcademicSettingsDto createUpdateAcademicSettingsDto, CancellationToken cancellationToken = default);
     }
 }

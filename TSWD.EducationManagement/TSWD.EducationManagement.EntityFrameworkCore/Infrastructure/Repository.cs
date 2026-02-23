@@ -52,6 +52,12 @@ namespace TSWD.EducationManagement.EntityFrameworkCore.Infrastructure
             return addedEntry.Entity;
         }
 
+        public async Task AddRangeAsync(IEnumerable<T> entity, CancellationToken ct = default)
+        {
+            await _dbSet.AddRangeAsync(entity, ct);
+            await _context.SaveChangesAsync(ct);
+        }
+
         public async Task UpdateAsync(T entity, CancellationToken ct = default)
         {
             _dbSet.Update(entity);
@@ -61,6 +67,15 @@ namespace TSWD.EducationManagement.EntityFrameworkCore.Infrastructure
         public async Task DeleteAsync(T entity, CancellationToken ct = default)
         {
             _dbSet.Remove(entity);
+            await _context.SaveChangesAsync(ct);
+        }
+
+        public async Task DeleteRangeAsync(IEnumerable<T> entities, CancellationToken ct = default)
+        {
+            if (entities == null || !entities.Any())
+                return; // Nothing to delete
+
+            _dbSet.RemoveRange(entities);
             await _context.SaveChangesAsync(ct);
         }
 

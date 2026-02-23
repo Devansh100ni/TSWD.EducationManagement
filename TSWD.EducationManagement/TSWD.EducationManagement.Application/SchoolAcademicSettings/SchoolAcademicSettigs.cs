@@ -22,6 +22,44 @@ namespace TSWD.EducationManagement.Application.SchoolAcademicSettings
             this.promotionRules = promotionRules;
         }
 
+        public async Task CreateUpdateRules(Guid tenantId, CreateUpdateAcademicSettingsDto createUpdateAcademicSettingsDto, CancellationToken cancellationToken = default)
+        {
+            var existingGradePolicies = (await gradePolicyRepository.GetAllAsync(cancellationToken)).Where(x => x.TenantId == tenantId);
+
+            if (existingGradePolicies.Any())
+            {
+                await gradePolicyRepository.DeleteRangeAsync(existingGradePolicies);
+            }
+
+            var newGradePolicies = createUpdateAcademicSettingsDto.GradePolicies.Select(x => new AppGradePolicy
+            {
+                TenantId = tenantId,
+                FromPercent = x.FromPercent,
+                ToPercent = x.ToPercent,
+                Grade = x.Grade
+            }).ToList();
+
+            await gradePolicyRepository.AddRangeAsync(newGradePolicies, cancellationToken);
+
+            var existingPromotionRules = (await promotionRules.GetAllAsync(cancellationToken)).Where(x => x.TenantId == tenantId);
+
+            if (existingPromotionRules.Any())
+            {
+                await promotionRules.DeleteRangeAsync(existingPromotionRules);
+            }
+
+            var newPromotionRules = createUpdateAcademicSettingsDto.SchoolPromotionRules.Select(x => new AppPromotionRule
+            {
+                TenantId = tenantId,
+                RuleId = x.RuleId,
+                FilterId = x.FilterId,
+                RuleValue = x.PromotionValue,
+                IsPercent = x.IsPercent
+            }).ToList();
+
+            await promotionRules.AddRangeAsync(newPromotionRules, cancellationToken);
+        }
+
         public async Task<AcademicSettingsDto> GetAcademicSettingsAsync(Guid tenantId, CancellationToken cancellationToken = default)
         {
             var gradePoliciesTask = gradePolicyRepository.GetAllAsync(
@@ -71,5 +109,7 @@ namespace TSWD.EducationManagement.Application.SchoolAcademicSettings
 
             return result;
         }
+
+
     }
 }

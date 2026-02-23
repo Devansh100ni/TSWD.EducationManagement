@@ -12,8 +12,10 @@ namespace TSWD.EducationManagement.EntityFrameworkCore.Infrastructure
         Task<IEnumerable<T>> GetAllNoTrackingAsync(CancellationToken ct = default);
         Task<IEnumerable<TResult>> GetAllNoTrackingAsync<TResult>(Expression<Func<T, bool>> predicate, Expression<Func<T, TResult>> selector, CancellationToken cancellationToken = default);
         Task<T> AddAsync(T entity, CancellationToken ct = default);
+        Task AddRangeAsync(IEnumerable<T> entity, CancellationToken ct = default);
         Task UpdateAsync(T entity, CancellationToken ct = default);
         Task DeleteAsync(T entity, CancellationToken ct = default);
+        Task DeleteRangeAsync(IEnumerable<T> entities, CancellationToken ct = default);
 
         Task<int> SaveChangesAsync(CancellationToken ct = default);
 
