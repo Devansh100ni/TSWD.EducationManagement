@@ -11,6 +11,8 @@
     <None Remove="Migration\01\V1_0_9__ApiLogsTable.sql" />
     <None Remove="Migration\02\V1_0_10__SchoolAcadmicTable.sql" />
     <None Remove="Migration\02\V1_0_11__AlterTableAppPromotionRules.sql" />
+    <None Remove="Migration\02\V1_0_12__AddRecordsToFilterTable.sql" />
+    <None Remove="Migration\02\V1_0_13__RefreshSuperAdminPermission.sql" />
   </ItemGroup>
 
   <ItemGroup>
@@ -27,6 +29,8 @@
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="Migration\02\V1_0_11__AlterTableAppPromotionRules.sql" />
+    <EmbeddedResource Include="Migration\02\V1_0_12__AddRecordsToFilterTable.sql" />
+    <EmbeddedResource Include="Migration\02\V1_0_13__RefreshSuperAdminPermission.sql" />
   </ItemGroup>
 
   <ItemGroup>
