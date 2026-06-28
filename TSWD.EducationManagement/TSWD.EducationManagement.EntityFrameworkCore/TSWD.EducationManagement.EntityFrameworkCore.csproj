@@ -13,6 +13,7 @@
     <None Remove="Migration\02\V1_0_11__AlterTableAppPromotionRules.sql" />
     <None Remove="Migration\02\V1_0_12__AddRecordsToFilterTable.sql" />
     <None Remove="Migration\02\V1_0_13__RefreshSuperAdminPermission.sql" />
+    <None Remove="Migration\02\V1_0_14__FeeFinanceTables.sql" />
   </ItemGroup>
 
   <ItemGroup>
@@ -31,6 +32,7 @@
     <EmbeddedResource Include="Migration\02\V1_0_11__AlterTableAppPromotionRules.sql" />
     <EmbeddedResource Include="Migration\02\V1_0_12__AddRecordsToFilterTable.sql" />
     <EmbeddedResource Include="Migration\02\V1_0_13__RefreshSuperAdminPermission.sql" />
+    <EmbeddedResource Include="Migration\02\V1_0_14__FeeFinanceTables.sql" />
   </ItemGroup>
 
   <ItemGroup>

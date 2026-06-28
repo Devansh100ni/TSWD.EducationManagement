@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using TSWD.EducationManagement.Domain.Entities;
 using TSWD.EducationManagement.Domain.Extentions;
@@ -34,6 +34,9 @@ public partial class EducationDbContext : DbContext
     public DbSet<AppGradePolicy> AppGradePolicies => Set<AppGradePolicy>();
     public DbSet<AppPromotionRule> AppPromotionRules => Set<AppPromotionRule>();
     public DbSet<AppSchoolRule> AppSchoolRules => Set<AppSchoolRule>();
+    public DbSet<AppFeeType> AppFeeTypes => Set<AppFeeType>();
+    public DbSet<AppFineRule> AppFineRules => Set<AppFineRule>();
+    public DbSet<AppFeeReminder> AppFeeReminders => Set<AppFeeReminder>();
     public DbSet<AppSection> AppSections => Set<AppSection>();
     public DbSet<AppSubject> AppSubjects => Set<AppSubject>();
 
@@ -79,6 +82,27 @@ public partial class EducationDbContext : DbContext
         builder.Entity<AppSchoolGeneralSetting>(b =>
         {
             b.ToTable(DbConstants.Prefix + "SchoolGeneralSettings", DbConstants.DefaultSchema);
+            b.HasQueryFilter(e =>
+            tenantProvider != null && (!tenantProvider.TenantId.HasValue || e.TenantId == tenantProvider.TenantId));
+        });
+
+        builder.Entity<AppFeeType>(b =>
+        {
+            b.ToTable(DbConstants.Prefix + "FeeTypes", DbConstants.DefaultSchema);
+            b.HasQueryFilter(e =>
+            tenantProvider != null && (!tenantProvider.TenantId.HasValue || e.TenantId == tenantProvider.TenantId));
+        });
+
+        builder.Entity<AppFineRule>(b =>
+        {
+            b.ToTable(DbConstants.Prefix + "FineRules", DbConstants.DefaultSchema);
+            b.HasQueryFilter(e =>
+            tenantProvider != null && (!tenantProvider.TenantId.HasValue || e.TenantId == tenantProvider.TenantId));
+        });
+
+        builder.Entity<AppFeeReminder>(b =>
+        {
+            b.ToTable(DbConstants.Prefix + "FeeReminders", DbConstants.DefaultSchema);
             b.HasQueryFilter(e =>
             tenantProvider != null && (!tenantProvider.TenantId.HasValue || e.TenantId == tenantProvider.TenantId));
         });
